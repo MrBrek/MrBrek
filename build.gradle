@@ -107,3 +107,17 @@ task publishCurseforge(type: net.darkhax.curseforgegradle.TaskPublishCurseForge)
     mainFile.addJavaVersion("Java ${JavaVersion.current().majorVersion}")
     mainFile.addGameVersion("1.16.5")
 }
+
+
+tasks.register("copyModJarToBin", Copy) {
+    dependsOn jar
+    from(layout.buildDirectory.dir("libs"))
+    include("mclogs-forge-${project.version}.jar")
+    into(layout.projectDirectory.dir("bin"))
+}
+
+tasks.register("buildBin") {
+    group = "build"
+    description = "Builds reobfuscated mod jar and copies it to ./bin"
+    dependsOn "reobfJar", "copyModJarToBin"
+}
