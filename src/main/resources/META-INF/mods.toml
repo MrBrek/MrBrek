@@ -1,0 +1,22 @@
+modLoader="javafml"
+loaderVersion="[34,)"
+license="MIT"
+issueTrackerURL="https://github.com/aternosorg/mclogs-forge/issues"
+
+[[mods]]
+modId="mclogs"
+version="${file.jarVersion}"
+displayName="Mclogs"
+displayURL="https://mclo.gs/"
+logoFile="logo.png"
+authors="Julian Vennen"
+description='''
+Easily share and analyse your server logs!
+
+Commands:
+    /mclogs - uploads your latest log
+    /mclogs list - lists all available log files
+    /mclogs share <filename> - uploads a specific log
+
+All commands require a permission level of 2 or higher
+'''
