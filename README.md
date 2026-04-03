@@ -1,51 +1,38 @@
-# SimplePlugin (Minecraft / Paper)
+![logo](https://mclo.gs/img/logo.png)
 
-Готовый стартовый плагин для Minecraft (Paper/Spigot API), который добавляет 2 команды:
+> [!WARNING]  
+> All variants of this mod/plugin have merged into the [mclogs-integration](https://github.com/aternosorg/mclogs-integration) repository.
+> This repository is no longer maintained and only remains as an archive.
 
-- `/hello` — отправляет приветственное сообщение.
-- `/heal` — полностью лечит игрока.
+With this mod, you can upload your Minecraft server log to [mclogs](https://mclo.gs) directly from your server
+with one simple command. It's even possible to export old server log files, e.g. after a crash. Critical information
+like IP addresses are automatically hidden to ensure safety and privacy.
 
-## Структура
+### Downloads
+- [GitHub Releases](https://github.com/aternosorg/mclogs-forge/releases)
+- [CurseForge](https://www.curseforge.com/minecraft/mc-mods/mclo-gs)
+- [Modrinth](https://modrinth.com/mod/mclogs)
 
-- `src/main/java/com/mrbrek/simpleplugin/SimplePlugin.java` — основной класс плагина.
-- `src/main/resources/plugin.yml` — описание плагина, команд и прав.
-- `pom.xml` — Maven-конфигурация для сборки `.jar`.
+### Commands
+```
+/mclogs
+```
+Upload the current server log
 
-## Сборка
+```
+/mclogs list
+```
+List all currently available server logs and upload them with one click.
+```
+/mclogs share <filename>
+```
+Share a specific log file, .gz files are automatically unpacked.
 
-Требования:
+All commands require the permission level 2
 
-- Java 17+
-- Maven 3.9+
-
-Команда сборки:
-
+### Developing
+This mod uses the [mclogs-java](https://github.com/aternosorg/mclogs-java) library.
+You need to run the following command to add it to the project:
 ```bash
-mvn clean package
+git submodule init && git submodule update
 ```
-
-После сборки `.jar` будет в папке:
-
-```text
-target/simpleplugin-1.0.0.jar
-```
-
-## Установка
-
-1. Останови сервер Minecraft.
-2. Скопируй `target/simpleplugin-1.0.0.jar` в папку `plugins`.
-3. Запусти сервер.
-
-## Проверка
-
-В игре выполни:
-
-- `/hello`
-- `/heal`
-
-Если захочешь, я могу в следующем шаге добавить:
-
-- собственный конфиг (`config.yml`),
-- кулдаун на команды,
-- GUI-меню,
-- систему пермишенов по группам.
