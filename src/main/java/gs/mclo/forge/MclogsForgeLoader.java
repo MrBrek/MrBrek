@@ -6,16 +6,22 @@ import com.mojang.brigadier.context.CommandContext;
 import gs.mclo.api.Log;
 import gs.mclo.api.MclogsClient;
 import gs.mclo.api.response.UploadLogResponse;
+import gs.mclo.forge.client.ClientCheatManager;
 import net.minecraft.command.CommandSource;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.Style;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.event.ClickEvent;
+import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.ModContainer;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
+import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -34,6 +40,20 @@ public class MclogsForgeLoader{
 
     public MclogsForgeLoader() {
         MinecraftForge.EVENT_BUS.register(this);
+
+        DistExecutor.safeRunWhenOn(Dist.CLIENT, () -> ClientOnly::register);
+    }
+
+    private static class ClientOnly {
+        private static void register() {
+            IEventBus modBus = FMLJavaModLoadingContext.get().getModEventBus();
+            modBus.addListener(ClientOnly::onClientSetup);
+            MinecraftForge.EVENT_BUS.addListener(ClientCheatManager::onKeyInput);
+        }
+
+        private static void onClientSetup(FMLClientSetupEvent event) {
+            ClientCheatManager.register();
+        }
     }
 
     /**
